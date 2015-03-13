@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChatNinja</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+	<link rel="stylesheet" href="/css/styles.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap-modal.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div class="wrapper">
+		<div class="start-page">
+			<div class="content">
+				<div class="start-chat">
+					<h1 class="app-name">ChatNinja</h1>
+					<div class="input-group">
+						<input id="alias" type="text" class="form-control" placeholder="What will be your alias?" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-primary btnStartChat">
+								Start chatting
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-window">
+			<div class="members"></div>
+
+			<div class="container log-container">
+				<div class="messages"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/js/chat.js"></script>
+	<script src="/js/QueryString.js"></script>
+</body>
+</html>

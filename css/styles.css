@@ -1,0 +1,89 @@
+
+.start-page {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+.start-page .content {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.start-page .content .start-chat {
+    margin: 0 auto;
+    max-width: 400px;
+}
+.app-name {
+    font-size: 40px;
+}
+.main-window {
+    background-color: #eee;
+    display: none;
+    height: 100%;
+    padding-left: 300px;
+    position: relative;
+}
+.main-window .container {
+    background-color: #fff;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+.chat-window {
+    height: 100%;
+    position: relative;
+}
+.chat-window .container {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0 0 35px;
+    position: relative;
+    width: 100%;
+}
+.form-controls {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+.members {
+    background-color: #eee;
+    border-right: 1px solid #ddd;
+    bottom: 0;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+}
+.members .member {
+    cursor: pointer;
+    display: block;
+    line-height: 25px;
+    padding: 2px 3px;
+}
+.members .member:hover {
+    background-color: #c2dbff;
+}
+.messages-container {
+    background-color: #fff;
+    height: 100%;
+    overflow: auto;
+}
+.messages {
+    padding: 10px 15px;
+}
+.message:first-child {
+    margin-top: 0;
+}
+.message {
+    margin: 10px 0;
+}
+.message-sender {
+    font-size: 80%;
+    font-style: italic;
+    font-weight: bold;
+}
+.red { color: #f00; }
+.green { color: #080; }
