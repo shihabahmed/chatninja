@@ -20,6 +20,7 @@ var wrapper =  jWindow = jMessages = btnStartChat = btnSend = txtAlias = txtMess
 			} else {
 				j(".start-page").hide();
 				j(".main-window").show();
+				jMembers.children('h4').text(alias);
 
 				j('title').prepend(alias + ' :: ');
 				initChatting();
@@ -32,11 +33,27 @@ var wrapper =  jWindow = jMessages = btnStartChat = btnSend = txtAlias = txtMess
 			}
 		});
 
-		socket = io();
-
 		var initChatting = function() {
-			//socket = io.connect('/');
 			var html = '';
+
+			socket = io.connect('/');
+			//socket = io();
+
+			btnSend.click(function () {
+				var text = txtMessage.val();
+				socket.emit('send', {
+					message: text,
+					receiver: partner,
+					sender: user
+				});
+				txtMessage.val("");
+			});
+
+			txtMessage.keyup(function (e) {
+				if (e.keyCode == 13) {
+					btnSend.click();
+				}
+			});
 
 			socket.emit('add user', alias);
 
@@ -64,9 +81,11 @@ var wrapper =  jWindow = jMessages = btnStartChat = btnSend = txtAlias = txtMess
 			});
 
 			socket.on('message received', function (data) {
-				console.log(data);
-				//window.open('/chat.html?rid=' + data.receiver.id + '&rn=' + data.receiver.name + '&sn=' + data.sender + '&msg=' + data.message, data.sender, "width=400, height=550, menubar=0, location=0, resizable=0");
-				window.open('/chat.html?rn=' + data.sender + '&sn=' + data.receiver + '&msg=' + data.message, data.sender, "width=400, height=550, menubar=0, location=0, resizable=0");
+				if (data.message) {
+					showMessage(data.message, (data.username ? data.username : 'Server'));
+				} else {
+					console.log("An unexpected error occurred:", data);
+				}
 			});
 		};
 

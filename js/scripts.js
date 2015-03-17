@@ -42,18 +42,5 @@ var partner = QueryString('rn'),
                 btnSend.click();
             }
         });
-
-        {
-            //socket = io.connect('/');
-            var html = '';
-
-            socket.on('message received', function (data) {
-                if (data.message) {
-                    showMessage(data.message, (data.username ? data.username : 'Server'));
-                } else {
-                    console.log("An unexpected error occurred:", data);
-                }
-            });
-        }
     });
 })(jQuery);
