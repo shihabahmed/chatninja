@@ -47,7 +47,7 @@
     left: 0;
     position: absolute;
 }
-.members {
+.members-container {
     background-color: #eee;
     border-right: 1px solid #ddd;
     bottom: 0;
@@ -57,28 +57,68 @@
     top: 0;
     width: 300px;
 }
-.members .member {
+.members-container h4 {
+    line-height: 25px;
+    background-color: #e7e7e7;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: -10px -10px 10px;
+}
+.members-container .member {
     cursor: pointer;
     display: block;
     line-height: 25px;
     padding: 2px 3px;
 }
-.members .member:hover {
+.members-container .member:hover {
     background-color: #c2dbff;
+}
+.members-container .member.active {
+    background-color: #dedede;
+}
+.members-container .member.highlight {
+    color: #f60;
+    font-weight: bold;
 }
 .messages-container {
     background-color: #fff;
     height: 100%;
     overflow: auto;
+    position: relative;
+    padding-bottom: 35px;
 }
 .messages {
-    padding: 10px 15px;
+    display: none;
+    height: 100%;
+    padding: 45px 15px 10px;
+    overflow: auto;
 }
-.message:first-child {
+.messages.active {
+    display: block;
+}
+.messages .user {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 25px;
+    background-color: #dff4ff;
+    border-bottom: solid 1px #dadada;
+    padding: 5px 10px;
+    margin: -45px -15px 0;
+}
+.messages .user + .message {
+    border-top: none;
     margin-top: 0;
 }
 .message {
-    margin: 10px 0;
+    border-top: 1px solid #ededed;
+    padding: 6px 5px;
+    margin: 0 -5px;
+}
+.message.sender {
+    color: #00f;
+}
+.message.receiver {
+    color: #f00;
 }
 .message-sender {
     font-size: 80%;
