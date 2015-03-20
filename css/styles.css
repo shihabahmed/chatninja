@@ -127,3 +127,114 @@
 }
 .red { color: #f00; }
 .green { color: #080; }
+
+
+/* DEVELOPERS */
+.developers-section {
+    margin: 150px auto 0;
+    max-width: 400px;
+    text-align: center;
+}
+
+.developers-section:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.developers-section .developers {
+    display: inline-block;
+    width: auto;
+}
+
+.developers .developer:first-child {
+    margin-left: 0;
+}
+
+
+
+.developer {
+    margin: 0 0 0 10px;
+    padding-top: 10px;
+    width: 40px;
+    height: 50px;
+    position: relative;
+    cursor: pointer;
+    float:left;
+}
+
+.developer * {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.developer img {
+    width: 100%;
+    border-radius: 100%;
+    opacity: 0.6;
+}
+
+.developer:hover img {
+    opacity: 1;
+}
+
+.developer .name {
+    font-size: 80%;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: -15px;
+}
+
+.developer ul.links {
+    list-style: none;
+    border: 1px solid #428bca;
+    background-color: #fff;
+    width: 100px;
+    margin: 0 0 0 -50px;
+    padding: 0;
+    position: absolute;
+    bottom: 51px;
+    left: 50%;
+    border-radius: 4px;
+}
+
+.developer .name, .developer ul.links {
+    display: none;
+}
+
+.developer:hover .name, .developer:hover ul.links {
+    display: block;
+}
+
+.developer ul.links:after {
+    content: " ";
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin-left: -10px;
+    border: 10px solid #428bca;
+    border-color: #428bca transparent;
+    border-bottom: none;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+}
+
+.developer ul.links li a {
+    text-align: center;
+    line-height: 1;
+    display: block;
+    padding: 6px 10px;
+}
+
+.developer ul.links li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: #428bca;
+}

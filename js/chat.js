@@ -24,13 +24,23 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 			if (alias == "") {
 				alert("Please type your alias!");
 			} else {
-				j(".start-page").hide();
-				j(".main-window").show();
-				jMembers.siblings('h4').text(alias);
+				socket.emit('join', alias);
 
-				j('title').prepend(alias + ' :: ');
+				socket.on('login status', function (data) {
+					if (user && user.id != data.user.id) {
+						if (data.status == 'error') {
+							alert(data.message);
+						} else {
+							j(".start-page").hide();
+							j(".main-window").show();
+							jMembers.siblings('h4').text(alias);
 
-				initChatting();
+							j('title').prepend(alias + ' :: ');
+
+							initChatting();
+						}
+					}
+				});
 			}
 		});
 
@@ -72,8 +82,6 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 
 		var initChatting = function() {
 			var html = '';
-
-			socket.emit('join', alias);
 
 			btnSend.click(function () {
 				var text = txtMessage.val();

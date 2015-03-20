@@ -19,10 +19,22 @@ io.on('connection', function(socket){
     });
 
     socket.on('join', function(username) {
-        socket.join(username);
-        socket.username = username;
-        users[username] = { id: socket.id };
-        io.emit('users online', { users: users, user: username, event: 'user joined', message: username + ' has joined <em><ins>ChatNinja</ins></em>...' });
+        if (username in users) {
+            io.to(socket.id).emit('login status', { status: 'error', user: { id: socket.id, name: username }, message: username + ' is not available. Try another.' });
+        } else {
+            socket.join(username);
+            socket.username = username;
+
+            io.emit('login status', { status: 'success', user: { id: socket.id, name: username } });
+
+            users[username] = {id: socket.id};
+            io.emit('users online', {
+                users: users,
+                user: username,
+                event: 'user joined',
+                message: username + ' has joined <em><ins>ChatNinja</ins></em>...'
+            });
+        }
     });
 
     socket.on('send', function(data) {
