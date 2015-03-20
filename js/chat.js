@@ -15,27 +15,8 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 		btnSend = j("#send");
 		txtMessage = j("#message");
 
-		var showMessage = function(data) {
-			if (data.sender == user) {
-				j('.messages[data-user="' + data.receiver.id + '"]')
-					.append('<div class="message sender">'+
-					'	<div class="message-sender">Me: </div>' +
-					'	<div class="message-body">' + data.message + '</div>'+
-					'</div>');
-			} else {
-				j('.messages[data-user="' + data.sender.id + '"]')
-					.append('<div class="message receiver">'+
-					'	<div class="message-sender">' + data.sender.name + ': </div>' +
-					'	<div class="message-body">' + data.message + '</div>'+
-					'</div>');
-
-				var member = j('.member[data-id=' + data.sender.id + ']');
-
-				if (!member.hasClass('active')) {
-					member.addClass('highlight');
-				}
-			}
-		};
+		//socket = io.connect('/');
+		socket = io();
 
 		btnStartChat.click(function () {
 			alias = txtAlias.val();
@@ -58,11 +39,38 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 			}
 		});
 
+		var dateToString = function(date) {
+			return ('<small><b>[' + date.toLocaleString() + ']</b></small> ');
+		};
+
+		var transformMessage = function(message) {
+			return message;
+		};
+
+		var showMessage = function(data) {
+			if (data.sender == user) {
+				j('.messages[data-user="' + data.receiver.id + '"]')
+					.append('<div class="message sender">'+
+					'	<div class="message-sender">Me: </div>' +
+					'	<div class="message-body">' + data.message + '</div>'+
+					'</div>');
+			} else {
+				j('.messages[data-user="' + data.sender.id + '"]')
+					.append('<div class="message receiver">'+
+					'	<div class="message-sender">' + data.sender.name + ': </div>' +
+					'	<div class="message-body">' + data.message + '</div>'+
+					'</div>');
+
+				var member = j('.member[data-id=' + data.sender.id + ']');
+
+				if (!member.hasClass('active')) {
+					member.addClass('highlight');
+				}
+			}
+		};
+
 		var initChatting = function() {
 			var html = '';
-
-			//socket = io.connect('/');
-			socket = io();
 
 			socket.emit('join', alias);
 
@@ -117,14 +125,6 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 					console.log("An unexpected error occurred:", data);
 				}
 			});
-		};
-
-		var dateToString = function(date) {
-			return ('<small><b>[' + date.toLocaleString() + ']</b></small> ');
-		};
-
-		var transformMessage = function(message) {
-			return message;
 		};
 
 		jWindow.resize(function() {
