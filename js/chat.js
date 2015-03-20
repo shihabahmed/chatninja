@@ -15,38 +15,6 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 		btnSend = j("#send");
 		txtMessage = j("#message");
 
-		//socket = io.connect('/');
-		socket = io();
-
-		btnStartChat.click(function () {
-			alias = txtAlias.val();
-			if (alias == "") {
-				alert("Please type your alias!");
-			} else {
-				j(".start-page").hide();
-				j(".main-window").show();
-				jMembers.siblings('h4').text(alias);
-
-				j('title').prepend(alias + ' :: ');
-
-				initChatting();
-			}
-		});
-
-		txtAlias.keyup(function (e) {
-			if (e.keyCode == 13) {
-				btnStartChat.click();
-			}
-		});
-
-		var dateToString = function(date) {
-			return ('<small><b>[' + date.toLocaleString() + ']</b></small> ');
-		};
-
-		var transformMessage = function(message) {
-			return message;
-		};
-
 		var showMessage = function(data) {
 			if (data.sender == user) {
 				j('.messages[data-user="' + data.receiver.id + '"]')
@@ -69,8 +37,32 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 			}
 		};
 
+		btnStartChat.click(function () {
+			alias = txtAlias.val();
+			if (alias == "") {
+				alert("Please type your alias!");
+			} else {
+				j(".start-page").hide();
+				j(".main-window").show();
+				jMembers.siblings('h4').text(alias);
+
+				j('title').prepend(alias + ' :: ');
+
+				initChatting();
+			}
+		});
+
+		txtAlias.keyup(function (e) {
+			if (e.keyCode == 13) {
+				btnStartChat.click();
+			}
+		});
+
 		var initChatting = function() {
 			var html = '';
+
+			//socket = io.connect('/');
+			socket = io();
 
 			socket.emit('join', alias);
 
@@ -125,6 +117,14 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 					console.log("An unexpected error occurred:", data);
 				}
 			});
+		};
+
+		var dateToString = function(date) {
+			return ('<small><b>[' + date.toLocaleString() + ']</b></small> ');
+		};
+
+		var transformMessage = function(message) {
+			return message;
 		};
 
 		jWindow.resize(function() {
