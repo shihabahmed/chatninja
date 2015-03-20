@@ -29,7 +29,8 @@ io.on('connection', function(socket){
         io.to(data.receiver.name).emit('message received', data);
     });
 });
-
+http.listen(process.env.PORT);
+/*
 http.listen(3000, function(){
     console.log('listening on *:3000');
-});
+});*/
