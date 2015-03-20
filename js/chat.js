@@ -59,14 +59,19 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 		};
 
 		var showMessage = function(data) {
+			var messageContainer = {};
 			if (data.sender == user) {
-				j('.messages[data-user="' + data.receiver.id + '"]')
+				messageContainer = j('.messages[data-user="' + data.receiver.id + '"]');
+				messageContainer
+					.find('.message-list')
 					.append('<div class="message sender">'+
 					'	<div class="message-sender">Me: </div>' +
 					'	<div class="message-body">' + data.message + '</div>'+
 					'</div>');
 			} else {
-				j('.messages[data-user="' + data.sender.id + '"]')
+				messageContainer = j('.messages[data-user="' + data.sender.id + '"]');
+				messageContainer
+					.find('.message-list')
 					.append('<div class="message receiver">'+
 					'	<div class="message-sender">' + data.sender.name + ': </div>' +
 					'	<div class="message-body">' + data.message + '</div>'+
@@ -78,6 +83,7 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 					member.addClass('highlight');
 				}
 			}
+			messageContainer.find('.message-list-container').scrollTop(messageContainer.find('.message-list').outerHeight(true));
 		};
 
 		var initChatting = function() {
@@ -118,7 +124,7 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 				k.sort();
 				for (var i = 0; i < k.length; i++) {
 					if (j('.messages[data-user=' + users[k[i]].id + ']').length < 1) {
-						jMessagesContainer.append('<div class="messages" data-user="' + users[k[i]].id + '"><div class="user">' + k[i] + '</h5></div>');
+						jMessagesContainer.append('<div class="messages" data-user="' + users[k[i]].id + '"><div class="user">' + k[i] + '</div><div class="message-list-container"><div class="message-list"></div></div></div>');
 					}
 					membersHtml += '<span class="member" data-id="' + users[k[i]].id + '" data-name="' + k[i] + '">' + k[i] + '</span>';
 				}

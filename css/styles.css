@@ -4,18 +4,22 @@
     height: 100%;
     width: 100%;
 }
+
 .start-page .content {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
 }
+
 .start-page .content .start-chat {
     margin: 0 auto;
     max-width: 400px;
 }
+
 .app-name {
     font-size: 40px;
 }
+
 .main-window {
     background-color: #eee;
     display: none;
@@ -23,6 +27,7 @@
     padding-left: 300px;
     position: relative;
 }
+
 .main-window .container {
     background-color: #fff;
     padding: 0;
@@ -31,10 +36,12 @@
     position: relative;
     box-sizing: border-box;
 }
+
 .chat-window {
     height: 100%;
     position: relative;
 }
+
 .chat-window .container {
     box-sizing: border-box;
     height: 100%;
@@ -42,11 +49,13 @@
     position: relative;
     width: 100%;
 }
+
 .form-controls {
     bottom: 0;
     left: 0;
     position: absolute;
 }
+
 .members-container {
     background-color: #eee;
     border-right: 1px solid #ddd;
@@ -57,6 +66,7 @@
     top: 0;
     width: 300px;
 }
+
 .members-container h4 {
     line-height: 25px;
     background-color: #e7e7e7;
@@ -64,22 +74,27 @@
     padding: 5px 10px;
     margin: -10px -10px 10px;
 }
+
 .members-container .member {
     cursor: pointer;
     display: block;
     line-height: 25px;
     padding: 2px 3px;
 }
+
 .members-container .member:hover {
     background-color: #c2dbff;
 }
+
 .members-container .member.active {
     background-color: #dedede;
 }
+
 .members-container .member.highlight {
     color: #f60;
     font-weight: bold;
 }
+
 .messages-container {
     background-color: #fff;
     height: 100%;
@@ -87,15 +102,18 @@
     position: relative;
     padding-bottom: 35px;
 }
+
 .messages {
     display: none;
     height: 100%;
-    padding: 45px 15px 10px;
+    padding: 36px 0 0;
     overflow: auto;
 }
+
 .messages.active {
     display: block;
 }
+
 .messages .user {
     font-size: 16px;
     font-weight: bold;
@@ -103,30 +121,44 @@
     background-color: #dff4ff;
     border-bottom: solid 1px #dadada;
     padding: 5px 10px;
-    margin: -45px -15px 0;
+    margin: -36px 0 0;
 }
-.messages .user + .message {
+
+.message-list-container {
+    height: 100%;
+    overflow: auto;
+    padding: 9px 15px 10px;
+}
+
+.message-list-container .message:first-child {
     border-top: none;
     margin-top: 0;
 }
+
 .message {
     border-top: 1px solid #ededed;
     padding: 6px 5px;
     margin: 0 -5px;
 }
+
 .message.sender {
     color: #00f;
 }
+
 .message.receiver {
     color: #f00;
 }
+
 .message-sender {
     font-size: 80%;
     font-style: italic;
     font-weight: bold;
 }
+
 .red { color: #f00; }
+
 .green { color: #080; }
+
 
 
 /* DEVELOPERS */
