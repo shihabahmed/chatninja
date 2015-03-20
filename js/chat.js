@@ -35,8 +35,6 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 							j(".main-window").show();
 							jMembers.siblings('h4').text(alias);
 
-							j('title').prepend(alias + ' :: ');
-
 							initChatting();
 						}
 					}
