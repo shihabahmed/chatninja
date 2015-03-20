@@ -20,6 +20,7 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 
 		btnStartChat.click(function () {
 			alias = txtAlias.val();
+
 			if (alias == "") {
 				alert("Please type your alias!");
 			} else {
