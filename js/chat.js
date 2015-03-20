@@ -77,16 +77,18 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 
 			btnSend.click(function () {
 				var text = txtMessage.val();
-				var data = {
-					message: text,
-					receiver: partner,
-					sender: user
-				};
+				if (text.length > 0) {
+					var data = {
+						message: text,
+						receiver: partner,
+						sender: user
+					};
 
-				showMessage(data);
+					showMessage(data);
 
-				socket.emit('send', data);
-				txtMessage.val("");
+					socket.emit('send', data);
+					txtMessage.val("");
+				}
 			});
 
 			txtMessage.keyup(function (e) {
