@@ -38,7 +38,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('send', function(data) {
-        io.to(data.receiver.name).emit('message received', data);
+        io.to(data.receiver.id).emit('message received', data);
     });
 });
 
