@@ -18,15 +18,15 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 		//socket = io.connect('/');
 		socket = io();
 
-		btnStartChat.click(function () {
+		btnStartChat.click(function() {
 			alias = txtAlias.val();
 
 			if (alias == "") {
 				alert("Please type your alias!");
 			} else {
-				socket.emit('join', alias);
+				socket.emit('_join', alias);
 
-				socket.on('login status', function (data) {
+				socket.on('_login_status', function(data) {
 					if (user && user.id != data.user.id) {
 						if (data.status == 'error') {
 							alert(data.message);
@@ -42,7 +42,7 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 			}
 		});
 
-		txtAlias.keyup(function (e) {
+		txtAlias.keyup(function(e) {
 			if (e.keyCode == 13) {
 				btnStartChat.click();
 			}
@@ -56,7 +56,7 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 			return message;
 		};
 
-		var showMessage = function(data) {
+		var showMessage = function(data, timestamp) {
 			var messageContainer = {};
 			if (data.sender == user) {
 				messageContainer = j('.messages[data-user="' + data.receiver.id + '"]');
@@ -68,17 +68,19 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 					'</div>');
 			} else {
 				messageContainer = j('.messages[data-user="' + data.sender.id + '"]');
-				messageContainer
-					.find('.message-list')
-					.append('<div class="message receiver">'+
-					'	<div class="message-sender">' + data.sender.name + ': </div>' +
-					'	<div class="message-body">' + data.message + '</div>'+
-					'</div>');
+				if (messageContainer.find('[data-time=' + timestamp + ']').length === 0) {
+					messageContainer
+						.find('.message-list')
+						.append('<div class="message receiver" data-time="' + timestamp + '">'+
+						'	<div class="message-sender">' + data.sender.name + ': </div>' +
+						'	<div class="message-body">' + data.message + '</div>'+
+						'</div>');
 
-				var member = j('.member[data-id=' + data.sender.id + ']');
+					var member = j('.member[data-id=' + data.sender.id + ']');
 
-				if (!member.hasClass('active')) {
-					member.addClass('highlight');
+					if (!member.hasClass('active')) {
+						member.addClass('highlight');
+					}
 				}
 			}
 			messageContainer.find('.message-list-container').scrollTop(messageContainer.find('.message-list').outerHeight(true));
@@ -87,7 +89,7 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 		var initChatting = function() {
 			var html = '';
 
-			btnSend.click(function () {
+			btnSend.click(function() {
 				var text = txtMessage.val();
 				if (text.length > 0) {
 					var data = {
@@ -98,44 +100,47 @@ var wrapper =  jWindow = jMessagesContainer = btnStartChat = btnSend = txtAlias 
 
 					showMessage(data);
 
-					socket.emit('send', data);
+					socket.emit('_send', data);
 					txtMessage.val("");
 				}
 			});
 
-			txtMessage.keyup(function (e) {
+			txtMessage.keyup(function(e) {
 				if (e.keyCode == 13) {
 					btnSend.click();
 				}
 			});
 
-			socket.on('users online', function (data) {
-				var membersHtml = "";
+			socket.on('_users_online', function(data) {
 				users = data.users;
-				user = {
-					id: users[alias].id,
-					name: alias
-				};
 
-				delete users[alias];
-				var k = Object.keys(users);
-				k.sort();
-				for (var i = 0; i < k.length; i++) {
-					if (j('.messages[data-user=' + users[k[i]].id + ']').length < 1) {
-						jMessagesContainer.append('<div class="messages" data-user="' + users[k[i]].id + '"><div class="user">' + k[i] + '</div><div class="message-list-container"><div class="message-list"></div></div></div>');
+				if (users[alias]) {
+					var membersHtml = "";
+					user = {
+						id: users[alias].id,
+						name: alias
+					};
+
+					delete users[alias];
+					var k = Object.keys(users);
+					k.sort();
+					for (var i = 0; i < k.length; i++) {
+						if (j('.messages[data-user=' + users[k[i]].id + ']').length < 1) {
+							jMessagesContainer.append('<div class="messages" data-user="' + users[k[i]].id + '"><div class="user">' + k[i] + '</div><div class="message-list-container"><div class="message-list"></div></div></div>');
+						}
+						membersHtml += '<span class="member" data-id="' + users[k[i]].id + '" data-name="' + k[i] + '">' + k[i] + '</span>';
 					}
-					membersHtml += '<span class="member" data-id="' + users[k[i]].id + '" data-name="' + k[i] + '">' + k[i] + '</span>';
+					jMembers.html(membersHtml);
 				}
-				jMembers.html(membersHtml);
 			});
 
-			socket.on('user left', function(data) {
+			socket.on('_user_left', function(data) {
 				jMessagesContainer.children('.messages[data-user=' + data.user.id + ']').remove();
 			});
 
-			socket.on('message received', function (data) {
+			socket.on('_message_received', function(data) {
 				if (data.message) {
-					showMessage(data);
+					showMessage(data, Math.floor(Date.now() / 1000));
 				} else {
 					console.log("An unexpected error occurred:", data);
 				}

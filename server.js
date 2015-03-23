@@ -9,27 +9,30 @@ app.get('/', function(req, res){
     res.sendFile('/index.html');
 });
 
-var users = {};
+http.listen(process.env.PORT || 3000);
+
+
+var online_users = {};
 
 io.on('connection', function(socket){
     socket.on('disconnect', function() {
-        delete users[socket.username];
-        io.emit('user left', { user: { id: socket.id, name: socket.username } });
-        io.emit('users online', { users: users, user: socket.username, event: 'user left', message: socket.username + ' has left <em><ins>ChatNinja</ins></em>...' });
+        delete online_users[socket.username];
+        io.emit('_user_left', { user: { id: socket.id, name: socket.username } });
+        io.emit('_users_online', { users: online_users, user: socket.username, event: 'user left', message: socket.username + ' has left <em><ins>ChatNinja</ins></em>...' });
     });
 
-    socket.on('join', function(username) {
-        if (username in users) {
-            io.to(socket.id).emit('login status', { status: 'error', user: { id: socket.id, name: username }, message: username + ' is not available. Try another.' });
+    socket.on('_join', function(username) {
+        if (username in online_users) {
+            io.to(socket.id).emit('_login_status', { status: 'error', user: { id: socket.id, name: username }, message: username + ' is not available. Try another.' });
         } else {
             socket.join(username);
             socket.username = username;
 
-            io.emit('login status', { status: 'success', user: { id: socket.id, name: username } });
+            io.emit('_login_status', { status: 'success', user: { id: socket.id, name: username } });
 
-            users[username] = {id: socket.id};
-            io.emit('users online', {
-                users: users,
+            online_users[username] = {id: socket.id};
+            io.emit('_users_online', {
+                users: online_users,
                 user: username,
                 event: 'user joined',
                 message: username + ' has joined <em><ins>ChatNinja</ins></em>...'
@@ -37,12 +40,7 @@ io.on('connection', function(socket){
         }
     });
 
-    socket.on('send', function(data) {
-        io.to(data.receiver.name).emit('message received', data);
+    socket.on('_send', function(data) {
+        io.to(data.receiver.id).emit('_message_received', data);
     });
 });
-http.listen(process.env.PORT || 3000);
-/*
-http.listen(3000, function(){
-    console.log('listening on *:3000');
-});*/
